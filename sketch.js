@@ -7,7 +7,7 @@ let handPredictions = [];
 function setup() {
   createCanvas(windowWidth, windowHeight); // 畫布為整個視窗
   video = createCapture(VIDEO);
-  video.size(width, height);
+  video.size(400, 600); // 設定視訊畫面為 400x600
   video.hide();
 
   facemesh = ml5.facemesh(video, () => {});
@@ -23,7 +23,8 @@ function setup() {
 
 function draw() {
   background(230, 220, 255); // 淡紫色
-  image(video, 0, 0, width, height);
+  // 將視訊畫面顯示在畫布左上角，大小為 400x600
+  image(video, width/2, height/2, 400, 600);
 
   if (facePredictions.length > 0) {
     const keypoints = facePredictions[0].scaledMesh;
