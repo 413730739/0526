@@ -43,6 +43,12 @@ function draw() {
       let faceIndex = null;
       let color = [0, 255, 0];
 
+      // debug: 顯示目前偵測到的手勢
+      textSize(32);
+      fill(255);
+      noStroke();
+      text(gesture || 'none', 10, 40);
+
       if (gesture === 'scissors') {
         faceIndex = 19;
         color = [0, 255, 255];
@@ -54,8 +60,13 @@ function draw() {
         color = [0, 0, 255];
       }
 
-      if (faceIndex !== null) {
+      if (faceIndex !== null && keypoints[faceIndex]) {
         const [fx, fy] = keypoints[faceIndex];
+        // debug: 顯示目前圓的座標
+        fill(255);
+        noStroke();
+        text(`(${Math.round(fx)}, ${Math.round(fy)})`, 10, 80);
+
         noFill();
         stroke(...color);
         strokeWeight(6);
