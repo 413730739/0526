@@ -30,14 +30,14 @@ function draw() {
   if (facePredictions.length > 0) {
     const keypoints = facePredictions[0].scaledMesh;
 
-    // 在第152點和第123點各畫一個紅色圓
-    const [x1, y1] = keypoints[152];
-    const [x2, y2] = keypoints[123];
+    // 臉頰兩側（以facemesh標準點位，左臉頰234，右臉頰454）
+    const [lx, ly] = keypoints[234];
+    const [rx, ry] = keypoints[454];
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
-    ellipse(x1, y1, 100, 100);
-    ellipse(x2, y2, 100, 100);
+    ellipse(lx, ly, 30, 30);
+    ellipse(rx, ry, 30, 30);
 
     // 偵測手勢並在指定臉部點畫圓
     if (handPredictions.length > 0) {
@@ -45,29 +45,24 @@ function draw() {
       let faceIndex = null;
       let color = [0, 255, 0];
 
-      // debug: 顯示目前偵測到的手勢
-      textSize(32);
-      fill(255);
-      noStroke();
-      text(gesture || 'none', 10, 40);
-
-      // 修改圓的位置
+      // 額頭中心點(10)、鼻子(1)、下巴(152)
       if (gesture === 'scissors') {
-        faceIndex = 1;
+        faceIndex = 10;      // 額頭中心
         color = [0, 255, 255];
       } else if (gesture === 'rock') {
-        faceIndex = 9;
+        faceIndex = 1;       // 鼻子
         color = [255, 0, 255];
       } else if (gesture === 'paper') {
-        faceIndex = 200;
+        faceIndex = 152;     // 下巴
         color = [0, 0, 255];
       }
 
       if (faceIndex !== null && keypoints[faceIndex]) {
         const [fx, fy] = keypoints[faceIndex];
-        // debug: 顯示目前圓的座標
         fill(255);
         noStroke();
+        textSize(32);
+        text(gesture || 'none', 10, 40);
         text(`(${Math.round(fx)}, ${Math.round(fy)})`, 10, 80);
 
         noFill();
