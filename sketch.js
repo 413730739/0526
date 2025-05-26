@@ -25,6 +25,7 @@ function setup() {
 }
 
 function draw() {
+  background(230, 220, 255); // 淡紫色
   image(video, 0, 0, width, height);
 
   if (facePredictions.length > 0) {
