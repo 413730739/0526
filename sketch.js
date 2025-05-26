@@ -5,10 +5,7 @@ let facePredictions = [];
 let handPredictions = [];
 
 function setup() {
-  createCanvas(640, 480).position(
-    (windowWidth - 640) / 2,
-    (windowHeight - 480) / 2
-  );
+  createCanvas(windowWidth, windowHeight);
   video = createCapture(VIDEO);
   video.size(width, height);
   video.hide();
