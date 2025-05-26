@@ -30,12 +30,14 @@ function draw() {
   if (facePredictions.length > 0) {
     const keypoints = facePredictions[0].scaledMesh;
 
-    // 只在第94點畫紅色圓
-    const [x, y] = keypoints[94];
+    // 在第152點和第123點各畫一個紅色圓
+    const [x1, y1] = keypoints[152];
+    const [x2, y2] = keypoints[123];
     noFill();
     stroke(255, 0, 0);
     strokeWeight(4);
-    ellipse(x, y, 100, 100);
+    ellipse(x1, y1, 100, 100);
+    ellipse(x2, y2, 100, 100);
 
     // 偵測手勢並在指定臉部點畫圓
     if (handPredictions.length > 0) {
