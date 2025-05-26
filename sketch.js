@@ -49,14 +49,15 @@ function draw() {
       noStroke();
       text(gesture || 'none', 10, 40);
 
+      // 修改圓的位置
       if (gesture === 'scissors') {
-        faceIndex = 19;
+        faceIndex = 1;
         color = [0, 255, 255];
       } else if (gesture === 'rock') {
-        faceIndex = 151;
+        faceIndex = 9;
         color = [255, 0, 255];
       } else if (gesture === 'paper') {
-        faceIndex = 199;
+        faceIndex = 200;
         color = [0, 0, 255];
       }
 
