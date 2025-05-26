@@ -34,7 +34,7 @@ function draw() {
     // 臉頰兩側（以facemesh標準點位，左臉頰234，右臉頰454）
     const [lx, ly] = keypoints[234];
     const [rx, ry] = keypoints[454];
-    noFill();
+    fill(255, 0, 0); // 填滿紅色
     stroke(255, 0, 0);
     strokeWeight(4);
     ellipse(lx, ly, 30, 30);
