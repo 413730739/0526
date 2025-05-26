@@ -5,7 +5,7 @@ let facePredictions = [];
 let handPredictions = [];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); // 畫布為整個視窗
   video = createCapture(VIDEO);
   video.size(width, height);
   video.hide();
@@ -88,4 +88,9 @@ function detectGesture(hand) {
   if (open === 0) return 'rock';     // 石頭
   if (open === 4) return 'paper';    // 布
   return null;
+}
+
+// 讓畫布隨視窗大小變動
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
