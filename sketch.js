@@ -23,16 +23,29 @@ function setup() {
 
 function draw() {
   background(230, 220, 255); // 淡紫色
-  // 將視訊畫面顯示在畫布左上角，大小為 400x600
-  image(video, width/2, height/2, 400, 600);
+
+  // 設定視訊畫面顯示在畫布中央
+  const videoW = 400;
+  const videoH = 600;
+  const videoX = (width - videoW) / 2;
+  const videoY = (height - videoH) / 2;
+  image(video, videoX, videoY, videoW, videoH);
 
   if (facePredictions.length > 0) {
     const keypoints = facePredictions[0].scaledMesh;
 
-    // 臉頰兩側（以facemesh標準點位，左臉頰234，右臉頰454）
-    const [lx, ly] = keypoints[234];
-    const [rx, ry] = keypoints[454];
-    fill(255, 0, 0); // 填滿紅色
+    // 依據視訊顯示位置與大小換算座標
+    function mapPoint(pt) {
+      return [
+        pt[0] / video.width * videoW + videoX,
+        pt[1] / video.height * videoH + videoY
+      ];
+    }
+
+    // 臉頰兩側
+    const [lx, ly] = mapPoint(keypoints[234]);
+    const [rx, ry] = mapPoint(keypoints[454]);
+    fill(255, 0, 0);
     stroke(255, 0, 0);
     strokeWeight(4);
     ellipse(lx, ly, 30, 30);
@@ -44,20 +57,19 @@ function draw() {
       let faceIndex = null;
       let color = [0, 255, 0];
 
-      // 額頭中心點(10)、鼻子(1)、下巴(152)
       if (gesture === 'scissors') {
-        faceIndex = 10;      // 額頭中心
+        faceIndex = 10;
         color = [0, 255, 255];
       } else if (gesture === 'rock') {
-        faceIndex = 1;       // 鼻子
+        faceIndex = 1;
         color = [255, 0, 255];
       } else if (gesture === 'paper') {
-        faceIndex = 152;     // 下巴
+        faceIndex = 152;
         color = [0, 0, 255];
       }
 
       if (faceIndex !== null && keypoints[faceIndex]) {
-        const [fx, fy] = keypoints[faceIndex];
+        const [fx, fy] = mapPoint(keypoints[faceIndex]);
         fill(255);
         noStroke();
         textSize(32);
